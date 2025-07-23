@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For My Nadnad 🤍</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            color: #fff;
+            line-height: 1.6;
+        }
+
+        .mixtape-container {
+            width: 100%;
+            max-width: 480px;
+            background: rgba(26, 26, 46, 0.85);
+            backdrop-filter: blur(12px);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .player-header {
+            padding: 30px 20px 20px;
+            background: rgba(0, 0, 0, 0.2);
+            text-align: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+        }
+
+        .hearts {
+            position: absolute;
+            top: 15px;
+            width: 100%;
+            text-align: center;
+            font-size: 1.5rem;
+            color: #ff6b6b;
+            opacity: 0.8;
+            animation: float 3s infinite ease-in-out;
+        }
+
+        .player-header h1 {
+            font-size: 2rem;
+            background: linear-gradient(45deg, #ff9aa2, #ffb7b7);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-top: 10px;
+            letter-spacing: 2px;
+            font-weight: 600;
+        }
+
+        .months-counter {
+            color: #adb5bd;
+            margin-top: 5px;
+            font-size: 0.9rem;
+        }
+
+        .song-info {
+            padding: 20px;
+            text-align: center;
+            min-height: 100px;
+        }
+
+        .song-title {
+            font-size: 1.5rem;
+            margin-bottom: 8px;
+            color: #f8f9fa;
+            font-weight: 500;
+        }
+
+        .artist {
+            color: #adb5bd;
+            font-size: 1rem;
+        }
+
+        .progress-container {
+            background: rgba(255, 255, 255, 0.1);
+            height: 6px;
+            border-radius: 3px;
+            margin: 0 20px 25px;
+            cursor: pointer;
+        }
+
+        .progress-bar {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, #ff6b6b, #ff9e7d);
+            border-radius: 3px;
+            transition: width 0.1s linear;
+            position: relative;
+        }
+
+        .progress-bar::after {
+            content: "";
+            position: absolute;
+            width: 12px;
+            height: 12px;
+            background: #fff;
+            border-radius: 50%;
+            right: 0;
+            top: -3px;
+            box-shadow: 0 0 10px rgba(255, 107, 107, 0.8);
+        }
+
+        .time-info {
+            display: flex;
+            justify-content: space-between;
+            padding: 0 20px;
+            font-size: 0.8rem;
+            color: #ced4da;
+            margin-top: 8px;
+        }
+
+        .controls {
+            display: flex;
+            justify-content: center;
+            gap: 35px;
+            padding: 15px 0 25px;
+        }
+
+     .control-btn {
+    background: none;
+    border: none;
+    color: #e9ecef; /* Fixed color value */
+    font-size: 2.2rem;
+    cursor: pointer;
+    transition: all 0.3s;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+        .control-btn:hover {
+            color: #ff9aa2;
+            transform: scale(1.1);
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .play-btn {
+            background: rgba(255, 154, 162, 0.15);
+            width: 60px;
+            height: 60px;
+        }
+
+        .play-btn:hover {
+            background: rgba(255, 154, 162, 0.25);
+        }
+
+        .song-list {
+            padding: 15px 20px;
+            max-height: 200px;
+            overflow-y: auto;
+            background: rgba(0, 0, 0, 0.15);
+        }
+
+        .song-item {
+            padding: 14px 16px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            border-radius: 8px;
+            margin-bottom: 6px;
+        }
+
+        .song-item:hover {
+            background: rgba(255, 154, 162, 0.1);
+        }
+
+        .song-number {
+            width: 24px;
+            color: #ff9aa2;
+            font-weight: 600;
+        }
+
+        .message-card {
+            background: rgba(255, 255, 255, 0.06);
+            margin: 20px;
+            padding: 25px;
+            border-radius: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            position: relative;
+        }
+
+        .message-title {
+            text-align: center;
+            font-size: 1.6rem;
+            margin-bottom: 20px;
+            color: #ffb7b7;
+            position: relative;
+            padding-bottom: 10px;
+            font-weight: 500;
+        }
+
+        .message-title::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 20%;
+            right: 20%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #ffb7b7, transparent);
+        }
+
+        .message-content {
+            font-size: 1rem;
+            overflow-y: auto;
+            max-height: 300px;
+            padding-right: 10px;
+        }
+
+        .message-content p {
+            margin-bottom: 18px;
+            text-align: justify;
+        }
+
+        .signature {
+            text-align: right;
+            font-style: italic;
+            margin-top: 10px;
+            color: #adb5bd;
+            font-weight: 300;
+        }
+
+        .emoji {
+            font-size: 1.2rem;
+            vertical-align: middle;
+        }
+
+        .heart-decoration {
+            position: absolute;
+            font-size: 1.5rem;
+            color: rgba(255, 107, 107, 0.3);
+        }
+
+        .heart-1 { top: 15px; left: 15px; }
+        .heart-2 { bottom: 15px; right: 15px; }
+
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+
+        .song-list::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .song-list::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+        }
+
+        .song-list::-webkit-scrollbar-thumb {
+            background: #ff6b6b;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="mixtape-container">
+        <div class="player-header">
+            <div class="hearts">🤍💗🤍💗</div>
+            <h1>FOR MY NADNAD</h1>
+            <div class="months-counter">7 MONTHS OF US</div>
+        </div>
+        
+        <div class="song-info">
+            <div class="song-title">Select a song</div>
+            <div class="artist">--:--</div>
+        </div>
+        
+        <div class="progress-container">
+            <div class="progress-bar"></div>
+        </div>
+        <div class="time-info">
+            <span id="current-time">0:00</span>
+            <span id="duration">0:00</span>
+        </div>
+        
+        <div class="controls">
+            <button class="control-btn" id="prev-btn">
+                <i class="fas fa-step-backward"></i>
+            </button>
+            <button class="control-btn play-btn" id="play-btn">
+                <i class="fas fa-play"></i>
+            </button>
+            <button class="control-btn" id="next-btn">
+                <i class="fas fa-step-forward"></i>
+            </button>
+        </div>
+        
+        <div class="song-list" id="song-list">
+            <!-- Songs populated by JavaScript -->
+        </div>
+        
+        <div class="message-card">
+            <div class="heart-decoration heart-1">❤️</div>
+            <div class="heart-decoration heart-2">💖</div>
+            
+
+<h2 class="message-title">To My Nadnad</h2>
+            <div class="message-content">
+                <p>Hi my love! This month was really tough for us. Sobrang na-test talaga yung patience natin, and even our love for each other. There were moments na ang hirap na, nakakapagod, and honestly parang ang bigat bigat na. There were times na we didn’t know if we should keep fighting or just let go. Ang daming tanong ang daming "what ifs", ang daming uncertainty.</p>
+                
+                <p>But despite all that I’m super thankful because in the end, we still chose to stay. We still chose this relationship. We still chose each other. And I hope we never stop choosing each other kahit gaano pa kahirap kahit ilang storms pa yung dumaan.</p>
+                
+                <p>Love isn’t always sweet and perfect, I know that now more than ever. Sometimes it’s messy, full of misunderstandings, full of tears, and full of doubts at yun ang napagdaanan natin baby. Pero what matters is that kahit sobrang nahihirapan tayo emotionally, we still held on.</p>
+                
+                <p>You don’t know how much that means to me. You don’t know how much I appreciate your strength, your softness, and your love kahit may times na hindi ako okay, kahit may times na nasasaktan ka na. I see your efforts, I feel your love, and I’m really proud of us. Kasi we fought. Kahit mahirap, hindi natin basta binitawan to.</p>
+                
+                <p>Seven months of love, laughter, tampuhan, iyakan, kulitan, tampo ulit, and lambing. Thank you for staying. Thank you for loving me at my worst. Thank you for choosing me every single day even on the days na hindi madali mahalin.</p>
+                
+                <p>I don’t know what the future holds, but I know I want to face it with you. More months, more growth, more love pa, and sana more strength to go through it all together. I love you so much, my nadnad. Always and sobra. Happy 7th Monthsary baby <span class="emoji">mwaaaaaa🤍💗</span></p>
+                
+                <div class="signature">- your weyang <span class="emoji">🤍</span></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Updated song data with your 3 songs
+        const songs = [
+            {
+                title: "Your Universe",
+                artist: "Rico Blanco",
+                file: "Your Universe.mp3",
+                duration: "0:31"
+            },
+            {
+                title: "You!",
+                artist: "LANY",
+                file: "You!.mp3",
+                duration: "0:18"
+            },
+            {
+                title: "Ours",
+                artist: "Taylor Swift",
+                file: "Ours.mp3",
+                duration: "1:16"
+            }
+        ];
+
+        // DOM elements
+        const audioPlayer = new Audio();
+        const playBtn = document.getElementById('play-btn');
+        const prevBtn = document.getElementById('prev-btn');
+        const nextBtn = document.getElementById('next-btn');
+        const progressBar = document.querySelector('.progress-bar');
+        const songTitle = document.querySelector('.song-title');
+        const songArtist = document.querySelector('.artist');
+        const songList = document.getElementById('song-list');
+        const progressContainer = document.querySelector('.progress-container');
+        const currentTimeEl = document.getElementById('current-time');
+        const durationEl = document.getElementById('duration');
+        const playIcon = playBtn.querySelector('i');
+
+        // Player state
+        let currentSongIndex = 0;
+        let isPlaying = false;
+
+        // Initialize playlist
+        function initPlaylist() {
+            songs.forEach((song, index) => {
+                const songItem = document.createElement('div');
+                songItem.className = 'song-item';
+                songItem.innerHTML = `
+                    <div class="song-number">${index + 1}</div>
+                    <div style="flex: 1">
+                        <div>${song.title}</div>
+                        <div style="color:#adb5bd;font-size:0.9rem">${song.artist} • ${song.duration}</div>
+                    </div>
+                    <div style="color: #ff9aa2; font-size: 1.1rem"><i class="fas fa-music"></i></div>
+                `;
+                songItem.addEventListener('click', () => loadSong(index));
+                songList.appendChild(songItem);
+            });
+        }
+
+        // Load song
+        function loadSong(index) {
+            currentSongIndex = index;
+            const song = songs[index];
+            
+            audioPlayer.src = song.file;
+            songTitle.textContent = song.title;
+            songArtist.textContent = song.artist;
+            durationEl.textContent = song.duration;
+
+              // Attempt to play
+    const playPromise = audioPlayer.play();
+    if (playPromise !== undefined) {
+        playPromise.catch(error => {
+            // Auto-play was prevented
+            console.error('Autoplay prevented:', error);
+            // Show the overlay
+            document.getElementById('overlay').style.display = 'flex';
+        });
+    }
+}
+            
+            // Reset progress bar
+            progressBar.style.width = '0%';
+            currentTimeEl.textContent = '0:00';
+            
+            // Highlight current song
+            document.querySelectorAll('.song-item').forEach((item, i) => {
+                i === index 
+                    ? item.style.background = 'rgba(255, 154, 162, 0.15)'
+                    : item.style.background = 'transparent';
+            });
+            
+            // Auto-play the song
+            audioPlayer.play();
+            isPlaying = true;
+            playIcon.className = 'fas fa-pause';
+        
+        // Play/Pause toggle
+        function togglePlay() {
+            if (isPlaying) {
+                audioPlayer.pause();
+                playIcon.className = 'fas fa-play';
+            } else {
+                audioPlayer.play();
+                playIcon.className = 'fas fa-pause';
+            }
+            isPlaying = !isPlaying;
+        }
+
+        // Update progress bar
+        function updateProgress() {
+            if (audioPlayer.duration) {
+                const progressPercent = (audioPlayer.currentTime / audioPlayer.duration) * 100;
+                progressBar.style.width = `${progressPercent}%`;
+                
+                // Update time display
+                currentTimeEl.textContent = formatTime(audioPlayer.currentTime);
+            }
+        }
+
+        // Format time in mm:ss
+        function formatTime(seconds) {
+            const min = Math.floor(seconds / 60);
+            const sec = Math.floor(seconds % 60);
+            return `${min}:${sec.toString().padStart(2, '0')}`;
+        }
+
+        // Set progress manually
+        function setProgress(e) {
+            const width = this.clientWidth;
+            const clickX = e.offsetX;
+            if (audioPlayer.duration) {
+                audioPlayer.currentTime = (clickX / width) * audioPlayer.duration;
+            }
+        }
+
+        // Next song
+        function nextSong() {
+            currentSongIndex = (currentSongIndex + 1) % songs.length;
+            loadSong(currentSongIndex);
+        }
+
+        // Previous song
+        function prevSong() {
+            currentSongIndex = (currentSongIndex - 1 + songs.length) % songs.length;
+            loadSong(currentSongIndex);
+        }
+
+        // Event listeners
+        playBtn.addEventListener('click', togglePlay);
+        prevBtn.addEventListener('click', prevSong);
+        nextBtn.addEventListener('click', nextSong);
+        audioPlayer.addEventListener('timeupdate', updateProgress);
+        audioPlayer.addEventListener('ended', nextSong);  // Auto-play next song
+        progressContainer.addEventListener('click', setProgress);
+
+        // Initialize and auto-play first song
+        window.onload = function() {
+            initPlaylist();
+            loadSong(0);  // Auto-play first song on load
+        };
+    </script>
+</body>
+</html>
